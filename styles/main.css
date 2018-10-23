@@ -1,0 +1,8 @@
+.centre{
+  text-align:center;
+  margin:auto;
+  line-height:50px;
+}
+
+/* # for IDs (only used for one element with that ID) */
+/* .for classes (can be used whenever wanted) */
