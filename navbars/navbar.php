@@ -20,7 +20,7 @@
           if (isset($_SESSION["account_type"])){
             if ($_SESSION["account_type"] == "Teacher"){
               include "teachers.php";
-            }else{
+            } elseif($_SESSION["account_type"] == "Student") {
               include "students.php";
             }
           } else{

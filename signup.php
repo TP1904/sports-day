@@ -1,5 +1,5 @@
 <?php
-  include_once "navbar.php";
+  include_once "navbars/navbar.php";
 ?>
 
   <section class="container">

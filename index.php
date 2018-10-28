@@ -1,5 +1,5 @@
 <?php
-  include_once "navbar.php";
+  include_once "navbars/navbar.php";
 ?>
 
 <section class="container">
@@ -10,6 +10,7 @@
         echo nl2br("You are logged in!\n");
         echo nl2br("\nYour User ID: "),$_SESSION['u_id'];
         echo nl2br("\nYour Email: "),$_SESSION['u_email'];
+        echo nl2br("\nYour Year: "),$_SESSION['u_year'];
         echo nl2br("\nYour Account Type: "),$_SESSION['account_type'];
       }
     ?>

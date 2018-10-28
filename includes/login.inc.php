@@ -35,6 +35,8 @@
             $_SESSION['u_first'] = $row['teacherFirstname'];
             $_SESSION['u_last'] = $row['teacherSurname'];
             $_SESSION['u_email'] = $row['teacherEmail'];
+            $_SESSION['u_year'] = "Teacher";
+            $_SESSION['u_gender'] = $row['teacherGender'];
             $_SESSION['account_type'] = "Teacher";
             header("Location: ../index.php?login=success"); // send user to logged in page
             exit();
@@ -49,9 +51,11 @@
           exit();
         } elseif ($hashedPasswordCheck == true) {
           $_SESSION['u_id'] = $row['studentID'];
-          $_SESSION['u_first'] = $row['studentFirstname'];
+          $_SESSION['u_first'] = $row['studentFirstName'];
           $_SESSION['u_last'] = $row['studentSurname'];
           $_SESSION['u_email'] = $row['studentEmail'];
+          $_SESSION['u_year'] = $row['studentYear'];
+          $_SESSION['u_gender'] = $row['studentGender'];
           $_SESSION['account_type'] = "Student";
           header("Location: ../index.php?login=success"); // send user to logged in page
           exit();
