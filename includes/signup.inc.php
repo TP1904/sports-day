@@ -1,11 +1,11 @@
 <?php
   if(isset($_POST['submit'])){ // ensures submit button has been clicked
     include_once 'dbconn.inc.php';
-    $first = mysqli_real_escape_string($conn,$_POST['first']); // stops code from being added
-    $last = mysqli_real_escape_string($conn,$_POST['last']);
-    $email = mysqli_real_escape_string($conn,$_POST['email']);
-    $uid = mysqli_real_escape_string($conn,$_POST['uid']);
-    $password = mysqli_real_escape_string($conn,$_POST['password']);
+    $first = $conn->real_escape_string($_POST['first']); // stops code from being added
+    $last = $conn->real_escape_string($_POST['last']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $uid = $conn->real_escape_string($_POST['uid']);
+    $password = $conn->real_escape_string($_POST['password']);
 
     // Error handlers
     // Check for empty fields
@@ -25,9 +25,8 @@
         } else{
           // Check if username is original
           $sql = "SELECT * FROM users WHERE user_uid = '$uid'";
-          $result = mysqli_query($conn,$sql);
-          $resultCheck = mysqli_num_rows($result);
-          if ($resultCheck > 0){
+          $result = $conn->query($sql);
+          if ($result->num_rows > 0){
             header("Location: ../signup.php?signup=usertaken");
             exit();
           } else{
@@ -35,7 +34,7 @@
             $hashedPassword = password_hash($password,PASSWORD_DEFAULT);
             // Insert the user into the database
             $sql = "INSERT INTO users (user_first,user_last,user_email,user_uid,user_password) VALUES ('$first','$last','$email','$uid','$hashedPassword');";
-            $result = mysqli_query($conn,$sql);
+            $result = $conn->query($sql);
             header("Location: ../?signup=success");
             exit();
           }

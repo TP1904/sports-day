@@ -7,5 +7,4 @@
       <input type="password" required name="password" placeholder="Password" class="form-control mr-sm-2" />
       <button type="submit" name="submit" class="btn btn-secondary my-2 my-sm-0">Login</button>
     </form>
-    <a href="signup.php" class="btn btn-primary">Sign Up</a>
   </div>

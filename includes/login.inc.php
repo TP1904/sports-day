@@ -4,8 +4,8 @@
   if (isset($_POST['submit'])){
     include 'dbconn.inc.php';
 
-    $uid = mysqli_real_escape_string($conn,$_POST['uid']);
-    $password = mysqli_real_escape_string($conn,$_POST['password']);
+    $uid = $conn->real_escape_string($_POST['uid']);
+    $password = $conn->real_escape_string($_POST['password']);
 
     // Error handlers
     // Check if inputs are empty
@@ -14,21 +14,19 @@
       exit();
     } else{
       $sql = "SELECT * FROM students s WHERE s.studentID='$uid' OR s.studentEmail='$uid'";
-      $result = mysqli_query($conn,$sql);
-      $resultCheck = mysqli_num_rows($result);
-      if ($resultCheck < 1){
+      $result = $conn->query($sql);
+      if ($result->num_rows < 1){
         $sql = "SELECT * FROM teachers t WHERE t.teacherInitials='$uid' OR t.teacherEmail='$uid'";
-        $result = mysqli_query($conn,$sql);
-        $resultCheck = mysqli_num_rows($result);
-        if ($resultCheck < 1){
-          header("Location: ../index.php?login=error3");
+        $result = $conn->query($sql);
+        if ($result->num_rows < 1){
+          header("Location: ../index.php?login=error");
           exit();
         } else{
           $row = mysqli_fetch_assoc($result);
           // De-hashing PASSWORD_DEFAULT
           $hashedPasswordCheck = password_verify($password,$row['teacherPassword']);
           if ($hashedPasswordCheck == false){
-            header("Location: ../index.php?login=error2");
+            header("Location: ../index.php?login=error");
             exit();
           } elseif ($hashedPasswordCheck == true) {
             $_SESSION['u_id'] = $row['teacherInitials'];
@@ -47,7 +45,7 @@
         // De-hashing PASSWORD_DEFAULT
         $hashedPasswordCheck = password_verify($password,$row['studentPassword']);
         if ($hashedPasswordCheck == false){
-          header("Location: ../index.php?login=error2");
+          header("Location: ../index.php?login=error");
           exit();
         } elseif ($hashedPasswordCheck == true) {
           $_SESSION['u_id'] = $row['studentID'];

@@ -7,6 +7,12 @@
 
 <?php
   include './includes/dbconn.inc.php';
+
+  if (isset($_SESSION["u-id"])){
+
+  } else {
+    header("Location: index.php");
+  }
 ?>
 
   </div>
