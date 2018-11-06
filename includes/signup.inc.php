@@ -24,7 +24,9 @@
           exit();
         } else{
           // Check if username is original
-          $sql = "SELECT * FROM users WHERE user_uid = '$uid'";
+          $sql = "SELECT *
+                  FROM users
+                  WHERE user_uid = '$uid'";
           $result = $conn->query($sql);
           if ($result->num_rows > 0){
             header("Location: ../signup.php?signup=usertaken");
@@ -33,7 +35,8 @@
             // Hashing Password
             $hashedPassword = password_hash($password,PASSWORD_DEFAULT);
             // Insert the user into the database
-            $sql = "INSERT INTO users (user_first,user_last,user_email,user_uid,user_password) VALUES ('$first','$last','$email','$uid','$hashedPassword');";
+            $sql = "INSERT INTO users (user_first,user_last,user_email,user_uid,user_password)
+                    VALUES ('$first','$last','$email','$uid','$hashedPassword')";
             $result = $conn->query($sql);
             header("Location: ../?signup=success");
             exit();

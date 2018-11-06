@@ -14,14 +14,18 @@
       exit(); // stops script from running
     } else{
       if ($_SESSION['account_type'] == 'Teacher'){
-        $sql = "SELECT teacherPassword FROM teachers WHERE teacherInitials = '{$_SESSION['u_id']}'";
+        $sql = "SELECT teacherPassword
+                FROM teachers
+                WHERE teacherInitials = '{$_SESSION['u_id']}'";
         $result = $conn->query($sql);
-        $row = mysqli_fetch_assoc($result);
+        $row = $result->fetch_assoc();
         $hashedPasswordCheck = password_verify($password,$row['teacherPassword']);
       } elseif ($_SESSION['account_type'] == 'Student'){
-        $sql = "SELECT studentPassword FROM students WHERE studentID = '{$_SESSION['u_id']}'";
+        $sql = "SELECT studentPassword
+                FROM students
+                WHERE studentID = '{$_SESSION['u_id']}'";
         $result = $conn->query($sql);
-        $row = mysqli_fetch_assoc($result);
+        $row = $result->fetch_assoc();
         $hashedPasswordCheck = password_verify($password,$row['studentPassword']);
         echo $hashedPasswordCheck;
       }
@@ -32,10 +36,14 @@
         // Hashing Password
         $hashedPassword = password_hash($new_pass,PASSWORD_DEFAULT);
         if ($_SESSION['account_type'] == "Teacher"){
-          $sql = "UPDATE teachers SET teacherPassword = '$hashedPassword' WHERE teacherInitials = '{$_SESSION['u_id']}'";
+          $sql = "UPDATE teachers
+                  SET teacherPassword = '$hashedPassword'
+                  WHERE teacherInitials = '{$_SESSION['u_id']}'";
           $result = $conn->query($sql);
         } elseif ($_SESSION['account_type'] == "Student"){
-          $sql = "UPDATE students SET studentPassword = '$hashedPassword' WHERE studentID = '{$_SESSION['u_id']}'";
+          $sql = "UPDATE students
+                  SET studentPassword = '$hashedPassword'
+                  WHERE studentID = '{$_SESSION['u_id']}'";
           $result = $conn->query($sql);
         }
         header("Location: ../?change_password=success");

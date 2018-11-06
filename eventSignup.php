@@ -23,7 +23,11 @@ if (isset($_SESSION['u_id'])){
   if ($year == "11" || $year == "12" || $year == "13"){
     $year = "Senior";
   }
-  $sql = "SELECT e.eventID,s.sportName,e.eventYear,e.eventLevel,s.sportType,e.eventGender FROM events e,sports s WHERE e.eventYear = '$year' AND (e.eventGender = '$gender' OR e.eventgender = 'Both') AND s.sportID = e.eventSportID";
+  $sql = "SELECT e.eventID,s.sportName,e.eventYear,e.eventLevel,s.sportType,e.eventGender
+          FROM events e,sports s
+          WHERE e.eventYear = '$year'
+          AND (e.eventGender = '$gender' OR e.eventgender = 'Both')
+          AND s.sportID = e.eventSportID";
   $result = $conn->query($sql);
   if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
@@ -42,11 +46,15 @@ if (isset($_SESSION['u_id'])){
       if (isset($_GET['eventID'])){
         $studentID = $_SESSION['u_id'];
         $eventID = $_GET['eventID'];
-        $sql = "SELECT * FROM eventstudents WHERE studentID = $studentID AND eventID = $eventID";
+        $sql = "SELECT *
+                FROM eventstudents
+                WHERE studentID = $studentID
+                AND eventID = $eventID";
         $result = $conn->query($sql);
         if ($result->num_rows < 1) {
           echo ($studentID);
-          $sql = "INSERT INTO `eventstudents`(`eventID`,`studentID`) VALUES ('$eventID','$studentID')";
+          $sql = "INSERT INTO `eventstudents`(`eventID`,`studentID`)
+                  VALUES ('$eventID','$studentID')";
           $result = $conn->query($sql);
         }
       }
@@ -54,7 +62,8 @@ if (isset($_SESSION['u_id'])){
       if (isset($_GET['signup'])){
         $teacherID = $_SESSION['u_id'];
         $eventID = 1;
-        $sql = "INSERT INTO `staffroles`(`eventID`,`teacherInitials`) VALUES ('$eventID','$teacherID')";
+        $sql = "INSERT INTO `staffroles`(`eventID`,`teacherInitials`)
+                VALUES ('$eventID','$teacherID')";
         $result = $conn->query($sql);
       }
     }

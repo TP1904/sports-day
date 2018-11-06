@@ -13,16 +13,22 @@
       header("Location: ../index.php?login=empty"); // returns to home page if route typed in URL
       exit();
     } else{
-      $sql = "SELECT * FROM students s WHERE s.studentID='$uid' OR s.studentEmail='$uid'";
+      $sql = "SELECT *
+              FROM students s
+              WHERE s.studentID='$uid'
+              OR s.studentEmail='$uid'";
       $result = $conn->query($sql);
       if ($result->num_rows < 1){
-        $sql = "SELECT * FROM teachers t WHERE t.teacherInitials='$uid' OR t.teacherEmail='$uid'";
+        $sql = "SELECT *
+                FROM teachers t
+                WHERE t.teacherInitials='$uid'
+                OR t.teacherEmail='$uid'";
         $result = $conn->query($sql);
         if ($result->num_rows < 1){
           header("Location: ../index.php?login=error");
           exit();
         } else{
-          $row = mysqli_fetch_assoc($result);
+          $row = $result->fetch_assoc();
           // De-hashing PASSWORD_DEFAULT
           $hashedPasswordCheck = password_verify($password,$row['teacherPassword']);
           if ($hashedPasswordCheck == false){
@@ -41,7 +47,7 @@
           }
         }
       } else{
-        $row = mysqli_fetch_assoc($result);
+        $row = $result->fetch_assoc();
         // De-hashing PASSWORD_DEFAULT
         $hashedPasswordCheck = password_verify($password,$row['studentPassword']);
         if ($hashedPasswordCheck == false){
